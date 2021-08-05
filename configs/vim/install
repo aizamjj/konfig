@@ -9,7 +9,7 @@ ensure_link "$THIS_DIR" "$VIM_DIR"
 
 mkdir -p "$VIM_DIR/tmp"
 
-ensure_package vim
+ensure_package vim cmake nodejs
 
 if [ ! -f "$VIM_DIR/autoload/plug.vim" ] ; then
     if missing "curl"; then
@@ -25,3 +25,7 @@ ensure_package "the_silver_searcher"
 
 # Install all of our plugins
 vim -c :PlugInstall -c :qa
+
+if [ ! -f "$YCMDIR/third_party/ycmd/ycm_core.cpython-39-darwin.so"  ]; then
+    python3 install.py --ts-completer
+fi
