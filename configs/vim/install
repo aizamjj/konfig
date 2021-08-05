@@ -1,0 +1,27 @@
+#!/bin/bash
+
+THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+VIM_DIR="$HOME/.vim"
+
+# Symlink our vim config
+ensure_link "$THIS_DIR" "$VIM_DIR"
+
+mkdir -p "$VIM_DIR/tmp"
+
+ensure_package vim
+
+if [ ! -f "$VIM_DIR/autoload/plug.vim" ] ; then
+    if missing "curl"; then
+        $grab curl
+    fi
+
+    curl -fLo "$VIM_DIR/autoload/plug.vim" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+# Need ag for CtrlP
+ensure_package "the_silver_searcher"
+
+# Install all of our plugins
+vim -c :PlugInstall -c :qa
