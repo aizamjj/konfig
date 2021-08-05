@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Installs everything necessary for my command-line dev environment.
+
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$BASE_DIR/common.sh"
+
+$apt update
+
+# We need git from the git-go
+ensure_package "git"
+
+# Clone this repo if it doesn't exist
+if [ ! -d ~/cawnfig ]; then
+  git clone https://github.com/cfoust/cawnfig.git ~/cawnfig
+fi
+
+# Create our lovely Developer directory
+mkdir -p "$DEV_DIR"
+
+git submodule update --init
+
+# Run installers
+install

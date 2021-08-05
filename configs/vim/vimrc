@@ -1,0 +1,91 @@
+" Sets the directory for swap files
+set directory^=$HOME/.vim/tmp//
+
+" The home directory for vim
+let g:KonHome = $HOME . '/.vim/'
+
+" Useful for sourcing the path in variables.
+function Src(path)
+  exec 'source ' . g:KonHome . a:path
+endfunction
+
+" indentation settings
+set tabstop=4 expandtab shiftwidth=4
+set autoindent
+set smartindent
+
+" highlight the matched search pattern
+set incsearch
+
+" substitute all matches in a line instead of one
+set gdefault
+
+" keep buffers hidden 
+set hidden
+
+" allow backspacing over the start of insert
+set backspace=start
+
+" show the line and column number of the cursor position
+set ruler
+
+" remove status line
+set laststatus=0
+
+" turn on syntax highlighting
+filetype plugin on
+syntax on
+
+" set redrawtime to fix syntax highlighting
+set redrawtime=10000
+
+" change the leader to space
+let mapleader = "\<Space>"
+
+" Use Ag with ack.vim 
+let g:ackprg="ag --nogroup --nocolor --column"
+
+" write and quit more easily
+nnoremap <silent> <leader>w :w<CR>
+nnoremap <silent> <leader>q :q<CR>
+
+" delete line below
+nnoremap <silent> <leader>d :+d<CR>
+
+" delete line above
+nnoremap <silent> <leader>D :-d<CR>
+
+" select the last pasted text with gp
+nnoremap gp `[v`]  
+
+" Jump around curly blocks with s
+nnoremap s ]}
+nnoremap S [{
+vmap s ]}
+vmap S [{
+
+
+" PLUGINZ
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+call Src('plugins.vim')
+
+" ctrlp.vim conf
+" show current buffers
+nnoremap <leader>; :CtrlPBuffer <CR>
+
+" show lines in current buffers 
+nnoremap <leader>: :CtrlPLine <CR>
+
+" show files in directory of current file 
+nnoremap <leader>l :CtrlP <C-R>=expand("%:p:h") . "/" <CR><CR>
+
+" show files in current directory
+nnoremap <leader>k :CtrlP <CR><CR>
+
+" show recently modified files 
+nnoremap <leader>ar :CtrlPMRU <CR>

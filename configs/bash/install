@@ -1,0 +1,11 @@
+#!/bin/bash
+
+THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+ensure_package fzf
+
+AJ_BASH_CONF="$THIS_DIR/config.sh"
+
+if ! cat ~/.bash_profile | grep "$AJ_BASH_CONF" > /dev/null 2>&1; then
+  echo "source $AJ_BASH_CONF" >> ~/.bash_profile
+fi
