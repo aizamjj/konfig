@@ -36,10 +36,6 @@ grb() {
   git rebase origin/master
 }
 
-source /users/aizam/git-completion.bash
-# styled man pages
-source ./users/aizam/.dot-config/most.sh
-
 ### ALIASES ###
 alias la='ls -A'
 alias c='cd .. && pwd && ls'
