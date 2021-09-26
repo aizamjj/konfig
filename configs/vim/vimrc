@@ -10,7 +10,7 @@ function Src(path)
 endfunction
 
 " indentation settings
-set tabstop=4 expandtab shiftwidth=4
+set tabstop=2 shiftwidth=2
 set autoindent
 set smartindent
 
@@ -31,6 +31,8 @@ set ruler
 
 " remove status line
 set laststatus=0
+
+set mouse=a
 
 " turn on syntax highlighting
 filetype plugin on
@@ -54,6 +56,10 @@ nnoremap <silent> <leader>d :+d<CR>
 
 " delete line above
 nnoremap <silent> <leader>D :-d<CR>
+
+" Same, but add whitespace with <leader>s
+nnoremap <silent> <leader>s :<C-u>put=repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
+nnoremap <silent> <leader>S :<C-u>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
 
 " select the last pasted text with gp
 nnoremap gp `[v`]  
@@ -89,3 +95,7 @@ nnoremap <leader>k :CtrlP <CR><CR>
 
 " show recently modified files 
 nnoremap <leader>ar :CtrlPMRU <CR>
+
+let g:neoformat_enabled_javascript = ['prettier']
+
+map <leader>tl :Neoformat <CR>
