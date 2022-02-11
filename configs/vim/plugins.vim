@@ -1,7 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-
 call plug#begin('~/.vim/addons')
 " File opener with fuzzy search.
 Plug 'ctrlpvim/ctrlp.vim'
@@ -14,11 +13,14 @@ Plug 'tpope/vim-fugitive'
 " Language-specific syntax highlighting
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', {'do': 'npm install'}
+Plug 'haskell/haskell-mode'
 " Auto close chars
 Plug 'cohama/lexima.vim'
 " Code completion
 Plug 'valloric/youcompleteme'
 Plug 'sbdchd/neoformat'
+Plug 'dense-analysis/ale'
 call plug#end()
 
 " Use ag (the silver searcher) with ctrlp
