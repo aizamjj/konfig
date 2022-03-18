@@ -13,7 +13,6 @@ endfunction
 set tabstop=8 shiftwidth=8
 set autoindent
 set smartindent
-
 " highlight the matched search pattern
 set incsearch
 
@@ -117,20 +116,21 @@ highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-	\ 'javascript': ['eslint', 'prettier'],
-	\ 'typescript': ['tsserver', 'tslint'],
+	\ 'javascript': ['eslint'],
+	\ 'typescript': ['eslint'],
 	\ 'json': ['jq'],
 	\ 'haskell': ['hlint'],
 	\}
 let g:ale_fixers = {
-	\ 'javascript': ['eslint', 'prettier'],
-	\ 'typescript': ['tsserver', 'tslint'],
+	\ 'javascript': ['eslint'],
+	\ 'typescript': ['eslint'],
 	\ 'json': ['jq'],
 	\ 'haskell': ['hlint'],
 	\}
 let g:ale_linters_explicit = 1
+let g:ale_fixers_explicit = 1
 
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
+let g:ale_javascript_prettier_options = '--print-width 80 --use-tabs --tab-width 4 --single-quote --trailing-comma all'
 
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gd :Gvdiffsplit!<CR>
