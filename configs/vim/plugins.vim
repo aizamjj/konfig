@@ -16,12 +16,15 @@ Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {'do': 'npm install'}
 Plug 'haskell/haskell-mode'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Auto close chars
 Plug 'cohama/lexima.vim'
 " Code completion
 Plug 'valloric/youcompleteme'
 Plug 'sbdchd/neoformat'
 Plug 'dense-analysis/ale'
+" Productivity metrics
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 
 " Use ag (the silver searcher) with ctrlp
