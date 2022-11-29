@@ -118,22 +118,23 @@ let g:ale_fix_on_save = 1
 let g:ale_linters = {
 	\ 'javascript': ['eslint'],
 	\ 'typescript': ['eslint'],
-	\ 'json': ['jq'],
 	\ 'haskell': ['hlint'],
+	\ 'yaml': ['prettier'],
 	\}
 let g:ale_fixers = {
 	\ 'javascript': ['eslint'],
 	\ 'typescript': ['eslint'],
-	\ 'json': ['jq'],
+	\ 'typescriptreact': ['eslint'],
+	\ 'json': ['prettier'],
 	\ 'haskell': ['hlint'],
+	\ 'yaml': ['prettier'],
 	\}
 let g:ale_linters_explicit = 1
 let g:ale_fixers_explicit = 1
 
-let g:ale_javascript_prettier_options = '--print-width 80 --use-tabs --tab-width 4 --single-quote --trailing-comma all'
-
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gd :Gvdiffsplit!<CR>
+let g:ycm_show_diagnostics_ui = 0
 
 " Quick jumps in quick list
-map <c-n> :cn <CR>zz
+map <c-n> :cn <CR>
