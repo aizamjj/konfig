@@ -1,19 +1,13 @@
 stty -ixon
 
-export PS1="[\[\e[38;5;118m\]\t\[\e[0m\]] \[\e[38;5;182m\]\W\[\e[0m\]\n🐎\[\e[38;5;105m\]\$(parse_git_branch)\[\e[00m\]$ "
-
-# export path to mongo
-export PATH="$PATH:/usr/local/opt/mongodb-community@4.2/bin"
-# create directory for personal scripts
-export PATH="$HOME/bin:$PATH"
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+export PS1='\[\e[93m\]\W \[\e[0;32m\]$(parse_git_branch)\$ \[\e[0m\] '
 
 # find and kill port
 killport() {
   lsof -i TCP:$1 | grep LISTEN | awk '{print $2}' | xargs kill -9
+}
+md() {
+  mkdir $1; cd $1
 }
 
 ### Git ###
@@ -45,9 +39,6 @@ grb() {
 ### ALIASES ###
 alias la='ls -A'
 alias c='cd .. && pwd && ls'
-md() {
-  mkdir $1; cd $1
-}
 # Kube
 alias k='kubectl'
 # Docker
@@ -64,5 +55,6 @@ alias v='vim'
 # TMUX
 alias tn='tmux new -s $1'
 alias ta='tmux attach-session -t $1'
-alias td='tmux kill-session -t $1'
-alias tq='tmux detach'
+alias tq='tmux kill-session -t $1'
+alias td='tmux detach'
+alias tl='tmux list-session'
