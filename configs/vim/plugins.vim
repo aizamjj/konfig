@@ -21,7 +21,6 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'cohama/lexima.vim'
 " Code completion
 Plug 'valloric/youcompleteme'
-Plug 'sbdchd/neoformat'
 Plug 'dense-analysis/ale'
 " Productivity metrics
 Plug 'wakatime/vim-wakatime'
