@@ -25,9 +25,3 @@ ensure_package "the_silver_searcher"
 
 # install all of our plugins
 vim -c :PlugInstall -c :qa
-
-# compile ycm
-if missing "cmake"; then
-	$grab cmake
-fi
-python3 "$VIM_DIR/addons/youcompleteme/install.py" --all

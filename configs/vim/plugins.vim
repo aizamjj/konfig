@@ -6,9 +6,7 @@ call plug#begin('~/.vim/addons')
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'imkmf/ctrlp-branches'
 Plug 'hara/ctrlp-colorscheme'
-Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
-Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf'
 Plug 'tpope/vim-fugitive'
 " Language-specific syntax highlighting
@@ -17,10 +15,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {'do': 'npm install'}
 Plug 'haskell/haskell-mode'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Auto close chars
-Plug 'cohama/lexima.vim'
 " Code completion
-Plug 'valloric/youcompleteme'
 Plug 'dense-analysis/ale'
 " Productivity metrics
 Plug 'wakatime/vim-wakatime'
