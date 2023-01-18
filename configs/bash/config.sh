@@ -28,12 +28,21 @@ gsu() {
   git submodule update --init
 }
 
+not_cloned() {
+  if ! cd $DEV_DIR && ls | grep "$1" > /dev/null 2>&1; then
+	  xargs git clone $1
+  fi
+}
 gnb() {
-  git checkout -b aj/$1
+	gh repo list | fzf | not_cloned
 }
 
 grb() {
   git rebase origin/$1 -i
+}
+
+gch() {
+  git branch | grep -v "^\*" | fzf | xargs git checkout
 }
 
 ### ALIASES ###
@@ -48,7 +57,6 @@ alias g='git'
 alias gs='git status'
 alias gb='git branch'
 alias ga='git add'
-alias gh='git checkout -b'
 alias gc='git commit'
 alias gp='git push origin HEAD'
 alias v='vim'
