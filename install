@@ -13,4 +13,4 @@ ensure_package "wget"
 mkdir -p "$DEV_DIR"
 
 # Run installers
-install
+install "$1"
