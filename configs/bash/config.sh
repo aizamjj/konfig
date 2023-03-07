@@ -44,12 +44,16 @@ grb() {
 gch() {
   git branch | grep -v "^\*" | fzf | xargs git checkout
 }
-
+# kube stuff
+export KUBECONFIG="$HOME/.kube/config"
 ### ALIASES ###
 alias la='ls -A'
 alias c='cd .. && pwd && ls'
 # Kube
 alias k='kubectl'
+alias kconf='kubectl config get-contexts'
+alias gac='gimme-aws-creds --profile $1'
+
 # Docker
 alias dc='docker compose build local'
 # Git 
