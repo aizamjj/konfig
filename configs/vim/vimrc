@@ -120,9 +120,8 @@ let g:ale_linters = {
 	\ 'json': ['prettier'],
 	\}
 let g:ale_fixers = {
-	\ 'javascript': ['eslint'],
-	\ 'typescript': ['eslint'],
-	\ 'typescriptreact': ['eslint'],
+	\ 'javascript': ['eslint', 'prettier'],
+	\ 'typescript': ['eslint', 'prettier'],
 	\ 'json': ['prettier'],
 	\ 'haskell': ['hlint'],
 	\ 'yaml': ['prettier'],
@@ -134,7 +133,8 @@ let g:ale_fixers_explicit = 1
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gd :Gvdiffsplit!<CR>
 
-let g:ycm_show_diagnostics_ui = 0
-
 " quick jumps in quick list
 map <c-n> :cn <CR>
+
+" go
+let g:go_bin_path = $HOME."/go/bin"
