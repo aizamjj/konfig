@@ -47,6 +47,25 @@ let mapleader = "\<Space>"
 " use Ag with ack.vim
 let g:ackprg="ag --nogroup --nocolor --column"
 
+set termguicolors
+function! SetKittyScheme() abort
+	let bg = synIDattr(hlID('Normal'), 'bg#')
+	let fg = synIDattr(hlID('Normal'), 'fg#')
+	call system(
+		\ "kitty @ --to " . $KITTY_LISTEN_ON
+		\ . " set-colors -a" .
+		\ " background=" . bg .
+		\ " foreground=" . fg
+		\ )
+	call system("tmux set -g pane-active-border-style fg=\"" . bg . "\",bg=\"" . bg . "\"")
+	call system("tmux set -g pane-border-style fg=\"" . bg . "\",bg=\"" . bg . "\"")
+endfunction
+
+if has("autocmd")
+	autocmd ColorScheme * call SetKittyScheme()
+endif
+
+
 " write and quit more easily
 nnoremap <silent> <leader>w :w<CR>
 nnoremap <silent> <leader>q :q<CR>

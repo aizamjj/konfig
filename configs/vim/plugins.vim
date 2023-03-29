@@ -19,6 +19,11 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'dense-analysis/ale'
 " Productivity metrics
 Plug 'wakatime/vim-wakatime'
+" color scheme
+Plug 'altercation/vim-colors-solarized'
+Plug 'frenzyexists/aquarium-vim', { 'branch': 'develop' }
+Plug 'flazz/vim-colorschemes', { 'commit': 'fd8f122' }
+Plug 'chriskempson/base16-vim', { 'commit': '7959654' }
 call plug#end()
 
 " Use ag (the silver searcher) with ctrlp
