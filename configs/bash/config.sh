@@ -48,6 +48,7 @@ gch() {
 export KUBECONFIG="$HOME/.kube/config"
 ### ALIASES ###
 alias la='ls -A'
+alias ll='ls -alhF --color=auto'
 alias c='cd .. && pwd && ls'
 # Kube
 alias k='kubectl'
@@ -70,3 +71,21 @@ alias ta='tmux attach-session -t $1'
 alias tq='tmux kill-session -t $1'
 alias td='tmux detach'
 alias tl='tmux list-session'
+# sourced from https://github.com/junegunn/fzf/wiki/examples#tmux
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-.} -maxdepth 3 -path '*/\.*' -prune \
+    -o -type d -print 2> /dev/null | fzf +m) &&
+    cd "$dir"
+}
+
+# fgb - checkout git branch (including remote branches)
+# Lets you switch git branches via fuzzy search.
+fgb() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+    branch=$(echo "$branches" |
+    fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
