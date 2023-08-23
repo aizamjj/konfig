@@ -1,8 +1,14 @@
 stty -ixon
 
-export PS1='\[\e[93m\]\W \[\e[0;32m\]$(parse_git_branch)\$ \[\e[0m\] '
+### Git ###
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
 
-# find and kill port
+export PS1='\[\e[93m\]\W \[\e[0;32m\]$(parse_git_branch)\$ \[\e[0m\] '
+export VISUAL=vim
+export EDITOR="$VISUAL"
+### Files ###
 killport() {
   lsof -i TCP:$1 | grep LISTEN | awk '{print $2}' | xargs kill -9
 }
@@ -10,10 +16,6 @@ md() {
   mkdir $1; cd $1
 }
 
-### Git ###
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
 # purrty git log
 gl() {
   git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -28,41 +30,36 @@ gsu() {
   git submodule update --init
 }
 
-not_cloned() {
-  if ! cd $DEV_DIR && ls | grep "$1" > /dev/null 2>&1; then
-	  xargs git clone $1
-  fi
-}
-gnb() {
-	gh repo list | fzf | not_cloned
+gcr() {
+  gh search repos org:wbd-streaming $1 in:name --json fullName --jq '.[].fullName' | fzf | xargs gh repo clone
 }
 
 grb() {
   git rebase origin/$1 -i
 }
 
-gch() {
-  git branch | grep -v "^\*" | fzf | xargs git checkout
-}
 # kube stuff
-export KUBECONFIG="$HOME/.kube/config"
-### ALIASES ###
+export KUBECONFIG=$KUBECONFIG:$(find $HOME/.kube/wbd -name '*kubeconfig' | xargs | sed 's/ /:/g'):$HOME/.kube/config
+
+## ALIASES ##
 alias la='ls -A'
 alias ll='ls -alhF --color=auto'
 alias c='cd .. && pwd && ls'
 # Kube
 alias k='kubectl'
-alias kconf='kubectl config get-contexts'
-alias gac='gimme-aws-creds --profile $1'
-
+complete -F __start_kubectl k
 # Docker
-alias dc='docker compose build local'
+alias dc='docker compose build $1'
+alias dcp='docker container prune -f'
+alias dcd='docker-compose down -v --rmi all --remove-orphans'
+alias dsp='docker system prune'
+alias dbp='docker builder prune' # clear build cache only
+alias dcu='docker-compose up -d --force-recreate --renew-anon-volumes'
 # Git 
 alias g='git'
 alias gs='git status'
 alias gb='git branch'
 alias ga='git add'
-alias gc='git commit'
 alias gp='git push origin HEAD'
 alias v='vim'
 # TMUX
@@ -89,3 +86,6 @@ fgb() {
     fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
+source $HOME/Dev/infra-bolt/scripts/aws-helpers.sh
+source $HOME/Dev/scripts/commit.sh
+source $HOME/Dev/scripts/aws.sh

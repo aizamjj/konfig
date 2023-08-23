@@ -13,7 +13,6 @@ endfunction
 set tabstop=8 shiftwidth=8
 set autoindent
 set smartindent
-
 " highlight the matched search pattern
 set incsearch
 
@@ -32,7 +31,19 @@ set ruler
 " remove status line
 set laststatus=0
 
-set mouse=a
+" Always change the cursor shape and support the mouse
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+if has('mouse')
+   set mouse=a
+   if !has('nvim')
+      if has('mouse_sgr')
+         set ttymouse=sgr
+      else
+         set ttymouse=xterm2
+      endif
+   endif
+endif
 
 " turn on syntax highlighting
 filetype plugin on
@@ -137,16 +148,21 @@ let g:ale_linters = {
 	\ 'haskell': ['hlint'],
 	\ 'yaml': ['prettier'],
 	\ 'json': ['prettier'],
+	\ 'terraform': ['terraform-fmt'],
+	\ 'go': ['gopls'],
 	\}
 let g:ale_fixers = {
 	\ 'javascript': ['eslint', 'prettier'],
 	\ 'typescript': ['eslint', 'prettier'],
 	\ 'json': ['prettier'],
 	\ 'haskell': ['hlint'],
+	\ 'terraform': ['terraform-fmt'],
 	\ 'yaml': ['prettier'],
+	\ 'go': ['gofmt'],
 	\}
 let g:ale_linters_explicit = 1
 let g:ale_fixers_explicit = 1
+"let g:ale_go_gopls_executable = $HOME."/bin/gopls"
 
 " git
 nnoremap <leader>gb :Git blame<CR>
@@ -155,5 +171,20 @@ nnoremap <leader>gd :Gvdiffsplit!<CR>
 " quick jumps in quick list
 map <c-n> :cn <CR>
 
+let g:fzf_colors =
+\ { 'fg':         ['fg', 'Normal'],
+  \ 'bg':         ['bg', 'Normal'],
+  \ 'preview-bg': ['bg', 'NormalFloat'],
+  \ 'hl':         ['fg', 'Comment'],
+  \ 'fg+':        ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':        ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':        ['fg', 'Statement'],
+  \ 'info':       ['fg', 'PreProc'],
+  \ 'border':     ['fg', 'Ignore'],
+  \ 'prompt':     ['fg', 'Conditional'],
+  \ 'pointer':    ['fg', 'Exception'],
+  \ 'marker':     ['fg', 'Keyword'],
+  \ 'spinner':    ['fg', 'Label'],
+  \ 'header':     ['fg', 'Comment'] }
 " go
-let g:go_bin_path = $HOME."/go/bin"
+let g:go_bin_path = $HOME."/bin"
