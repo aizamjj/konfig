@@ -25,3 +25,5 @@ ensure_package "the_silver_searcher"
 
 # install all of our plugins
 vim -c :PlugInstall -c :qa
+
+vim -c :colors brogrammer -c :qa
