@@ -39,7 +39,6 @@ grb() {
 }
 
 # kube stuff
-export KUBECONFIG=$KUBECONFIG:$(find $HOME/.kube/wbd -name '*kubeconfig' | xargs | sed 's/ /:/g'):$HOME/.kube/config
 
 ## ALIASES ##
 alias la='ls -A'
@@ -86,6 +85,3 @@ fgb() {
     fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
-source $HOME/Dev/infra-bolt/scripts/aws-helpers.sh
-source $HOME/Dev/scripts/commit.sh
-source $HOME/Dev/scripts/aws.sh
