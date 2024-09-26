@@ -14,7 +14,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {'do': 'npm install'}
 Plug 'haskell/haskell-mode'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'bakpakin/janet.vim'
 " Code completion
 Plug 'dense-analysis/ale'
 " Productivity metrics

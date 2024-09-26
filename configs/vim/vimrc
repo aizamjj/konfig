@@ -10,9 +10,11 @@ function Src(path)
 endfunction
 
 " indentation settings
-set tabstop=8 shiftwidth=8
+set expandtab
+set tabstop=4 shiftwidth=4
 set autoindent
 set smartindent
+
 " highlight the matched search pattern
 set incsearch
 
@@ -23,7 +25,7 @@ set gdefault
 set hidden
 
 " allow backspacing over the start of insert
-set backspace=start
+set backspace=start,indent,eol
 
 " show the line and column number of the cursor position
 set ruler
@@ -146,23 +148,22 @@ let g:ale_linters = {
 	\ 'javascript': ['eslint'],
 	\ 'typescript': ['eslint'],
 	\ 'haskell': ['hlint'],
-	\ 'yaml': ['prettier'],
+	\ 'yaml': ['yamllint'],
 	\ 'json': ['prettier'],
-	\ 'terraform': ['terraform-fmt'],
+	\ 'terraform': ['terraform'],
 	\ 'go': ['gopls'],
+	\ 'python': ['mypy'],
 	\}
 let g:ale_fixers = {
 	\ 'javascript': ['eslint', 'prettier'],
 	\ 'typescript': ['eslint', 'prettier'],
 	\ 'json': ['prettier'],
 	\ 'haskell': ['hlint'],
-	\ 'terraform': ['terraform-fmt'],
-	\ 'yaml': ['prettier'],
+	\ 'terraform': ['terraform'],
 	\ 'go': ['gofmt'],
 	\}
 let g:ale_linters_explicit = 1
 let g:ale_fixers_explicit = 1
-"let g:ale_go_gopls_executable = $HOME."/bin/gopls"
 
 " git
 nnoremap <leader>gb :Git blame<CR>
@@ -186,5 +187,3 @@ let g:fzf_colors =
   \ 'marker':     ['fg', 'Keyword'],
   \ 'spinner':    ['fg', 'Label'],
   \ 'header':     ['fg', 'Comment'] }
-" go
-let g:go_bin_path = $HOME."/bin"
