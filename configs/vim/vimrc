@@ -14,6 +14,8 @@ set expandtab
 set tabstop=4 shiftwidth=4
 set autoindent
 set smartindent
+set termguicolors
+let &t_ut=''
 
 " highlight the matched search pattern
 set incsearch
@@ -60,23 +62,37 @@ let mapleader = "\<Space>"
 " use Ag with ack.vim
 let g:ackprg="ag --nogroup --nocolor --column"
 
-set termguicolors
-function! SetKittyScheme() abort
-	let bg = synIDattr(hlID('Normal'), 'bg#')
-	let fg = synIDattr(hlID('Normal'), 'fg#')
-	call system(
-		\ "kitty @ --to " . $KITTY_LISTEN_ON
-		\ . " set-colors -a" .
-		\ " background=" . bg .
-		\ " foreground=" . fg
-		\ )
-	call system("tmux set -g pane-active-border-style fg=\"" . bg . "\",bg=\"" . bg . "\"")
-	call system("tmux set -g pane-border-style fg=\"" . bg . "\",bg=\"" . bg . "\"")
+function! SetKittyAndTmuxColors() abort
+  let bg = synIDattr(hlID('Normal'), 'bg#')
+  let fg = synIDattr(hlID('Normal'), 'fg#')
+
+  if empty(bg) | let bg = "#1d1f21" | endif
+  if empty(fg) | let fg = "#c5c8c6" | endif
+
+  " Update Kitty colors
+  "if !empty($KITTY_LISTEN_ON)
+    "call system(
+      "\ "kitty @ --to " . $KITTY_LISTEN_ON .
+      "\ " set-colors -a" .
+      "\ " background=" . bg .
+      "\ " foreground=" . fg
+      "\ )
+  "endif
+
+  " Update tmux colors
+  if !empty($TMUX)
+    let cmd = "tmux set -g pane-active-border-style fg='" . bg . "',bg='" . bg . "'"
+    call system(cmd)
+    let cmd = "tmux set -g pane-border-style fg='" . bg . "',bg='" . bg . "'"
+    call system(cmd)
+  endif
 endfunction
 
-if has("autocmd")
-	autocmd ColorScheme * call SetKittyScheme()
-endif
+" Apply whenever colorscheme changes
+autocmd ColorScheme * call SetKittyAndTmuxColors()
+
+" Or force it on Vim start
+autocmd VimEnter * call SetKittyAndTmuxColors()
 
 
 " write and quit more easily

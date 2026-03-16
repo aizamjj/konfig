@@ -5,9 +5,9 @@ parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-export PS1='\[\e[93m\]\W \[\e[0;32m\]$(parse_git_branch)\$ \[\e[0m\] '
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export PS1="\[\e[32m\]\w\[\e[33m\]\$(parse_git_branch)\[\e[0m\] \$ "
 ### Files ###
 killport() {
   lsof -i TCP:$1 | grep LISTEN | awk '{print $2}' | xargs kill -9
@@ -31,7 +31,11 @@ gsu() {
 }
 
 gcr() {
-  gh search repos org:wbd-streaming $1 in:name --json fullName --jq '.[].fullName' | fzf | xargs gh repo clone
+  local repo
+  repo=$(gh search repos org:wbd-streaming "$1" in:name --json fullName --jq '.[].fullName' | fzf)
+  if [[ -n "$repo" ]]; then
+    git clone "git@github.com-hbo:$repo.git"
+  fi
 }
 
 grb() {
@@ -46,7 +50,6 @@ alias ll='ls -alhF --color=auto'
 alias c='cd .. && pwd && ls'
 # Kube
 alias k='kubectl'
-complete -F __start_kubectl k
 # Docker
 alias dc='docker compose build $1'
 alias dcp='docker container prune -f'
@@ -85,3 +88,15 @@ fgb() {
     fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
+export PATH="/opt/homebrew/bin:$PATH"
+# Set GOPATH (optional but useful if not using modules only)
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+# Goenv setup
+export GOENV_ROOT="$(brew --prefix goenv)"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+
+# For GPG (if you're using GPG with git, e.g. commit signing)
+export GPG_TTY=$(tty)
