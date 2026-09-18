@@ -5,7 +5,7 @@ set directory^=$HOME/.vim/tmp//
 let g:KonHome=$HOME . '/.vim/'
 
 " Useful for sourcing the path in variables.
-function Src(path)
+function! Src(path)
   exec 'source ' . g:KonHome . a:path
 endfunction
 
@@ -146,7 +146,6 @@ let g:ale_fixers = {
 	\ 'go': ['gofmt'],
 	\}
 let g:ale_linters_explicit = 1
-let g:ale_fixers_explicit = 1
 
 " git
 nnoremap <leader>gb :Git blame<CR>
