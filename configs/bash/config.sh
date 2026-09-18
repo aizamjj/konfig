@@ -64,13 +64,7 @@ alias gb='git branch'
 alias ga='git add'
 alias gp='git push origin HEAD'
 alias v='vim'
-# TMUX
-alias tn='tmux new -s $1'
-alias ta='tmux attach-session -t $1'
-alias tq='tmux kill-session -t $1'
-alias td='tmux detach'
-alias tl='tmux list-session'
-# sourced from https://github.com/junegunn/fzf/wiki/examples#tmux
+# sourced from https://github.com/junegunn/fzf/wiki/examples
 # fd - cd to selected directory
 fd() {
   local dir
@@ -85,12 +79,12 @@ fgb() {
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
     branch=$(echo "$branches" |
-    fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    fzf --height "$(( 2 + $(wc -l <<< "$branches") ))" +m) &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 export PATH="/opt/homebrew/bin:$PATH"
 # ~/.local/bin (claude, etc). Lives here rather than in .bash_profile so that
-# non-login interactive shells — `bash` inside a shell, tmux panes, editor
+# non-login interactive shells — `bash` inside a shell, cy panes, editor
 # terminals — get it too; .bash_profile is only read by login shells.
 export PATH="$HOME/.local/bin:$PATH"
 # Go. Single toolchain from Homebrew; `go install` lands in $GOPATH/bin.

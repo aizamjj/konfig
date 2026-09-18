@@ -3,5 +3,4 @@
 ## vim 
 ## bash
 ## kitty
-## tmux
 ## cy
