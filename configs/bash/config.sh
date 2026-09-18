@@ -89,14 +89,30 @@ fgb() {
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 export PATH="/opt/homebrew/bin:$PATH"
-# Set GOPATH (optional but useful if not using modules only)
+# ~/.local/bin (claude, etc). Lives here rather than in .bash_profile so that
+# non-login interactive shells — `bash` inside a shell, tmux panes, editor
+# terminals — get it too; .bash_profile is only read by login shells.
+export PATH="$HOME/.local/bin:$PATH"
+# Go. Single toolchain from Homebrew; `go install` lands in $GOPATH/bin.
+# No goenv: since Go 1.21 the `go` directive in each go.mod pins the toolchain
+# and GOTOOLCHAIN=auto (the default) downloads it on demand, so per-project Go
+# versions are handled by the repo itself. To force one: GOTOOLCHAIN=go1.22.12.
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 
-# Goenv setup
-export GOENV_ROOT="$(brew --prefix goenv)"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-
 # For GPG (if you're using GPG with git, e.g. commit signing)
 export GPG_TTY=$(tty)
+export KUBECONFIG=$KUBECONFIG:$(find $HOME/.kube/wbd -name '*kubeconfig' | xargs | sed 's/ /:/g')
+source "$HOME/Dev/hbo/developer-tools/scripts/kube-helpers.sh"
+source "$HOME/Dev/hbo/scripts/aws_login.sh"
+source "$HOME/Dev/hbo/scripts/logs.sh"
+export PATH='/Users/ajigjids/.duckdb/cli/latest':$PATH
+export PATH="$HOME/Dev/hbo/scripts:$PATH"
+# Personal scripts (aurora, etc.)
+export PATH="$HOME/bin:$PATH"
+
+# Standup notes -- `standup` for the latest day, `standup ls` to browse,
+# `standup 08-12` for one day. Rendering is glow (brew install glow).
+standup() {
+  "$HOME/Dev/hbo/standup/bin/view.sh" "$@"
+}
