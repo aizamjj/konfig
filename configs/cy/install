@@ -1,0 +1,8 @@
+#!/bin/bash
+# cy is installed from its own tap (brew tap cfoust/taps && brew install cy),
+# so this only places the config -- same as kitty.
+
+THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+mkdir -p "$HOME/.config/cy"
+ensure_link "$THIS_DIR/cyrc.janet" "$HOME/.config/cy/cyrc.janet"

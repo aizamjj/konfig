@@ -4,3 +4,4 @@
 ## bash
 ## kitty
 ## tmux
+## cy
