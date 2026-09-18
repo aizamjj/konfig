@@ -6,6 +6,13 @@ ensure_package fzf
 
 AJ_BASH_CONF="$THIS_DIR/config.sh"
 
-if ! cat ~/.bash_profile | grep "$AJ_BASH_CONF" > /dev/null 2>&1; then
-  echo "source $AJ_BASH_CONF" >> ~/.bash_profile
+# .bashrc rather than .bash_profile: cy panes, a plain `bash` inside a shell and
+# editor terminals are all non-login shells, and only .bashrc reaches those.
+if ! grep -qF "$AJ_BASH_CONF" "$HOME/.bashrc" 2>/dev/null; then
+  echo "source $AJ_BASH_CONF" >> "$HOME/.bashrc"
+fi
+
+# ...and login shells read only .bash_profile, so point it at .bashrc.
+if ! grep -qF '.bashrc' "$HOME/.bash_profile" 2>/dev/null; then
+  printf '%s\n' '[ -f ~/.bashrc ] && source ~/.bashrc' >> "$HOME/.bash_profile"
 fi

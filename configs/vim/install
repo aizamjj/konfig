@@ -9,7 +9,8 @@ ensure_link "$THIS_DIR" "$VIM_DIR"
 
 mkdir -p "$VIM_DIR/tmp"
 
-ensure_package vim cmake nodejs python3
+# node is for vim-prettier's npm install step and ALE's eslint/prettier fixers.
+ensure_package vim node
 
 if [ ! -f "$VIM_DIR/autoload/plug.vim" ] ; then
     if missing "curl"; then
@@ -25,5 +26,3 @@ ensure_package "the_silver_searcher"
 
 # install all of our plugins
 vim -c :PlugInstall -c :qa
-
-vim -c :colors brogrammer -c :qa

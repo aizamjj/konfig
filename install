@@ -1,16 +1,20 @@
 #!/bin/bash
-# set -x
 # Installs everything necessary for my command-line dev environment.
 
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$BASE_DIR/common.sh"
 
+# Everything below installs through brew, so it has to exist first.
+if missing brew; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # We need git from the git-go
-ensure_package "git"
-ensure_package "wget"
+ensure_package git
 
 # Create our lovely Developer directory
 mkdir -p "$DEV_DIR"
 
 # Run installers
-install "$1"
+run_installers "${1:-}"
